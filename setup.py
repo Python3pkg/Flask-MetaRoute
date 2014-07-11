@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='Flask-MetaRoute',
-    version='1.3',
+    version='1.3.0',
     url='https://github.com/deep-orca/Flask-MetaRoute',
     license='BSD',
     author='Orca',
@@ -31,9 +31,8 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    entry_points =
-    """
+    entry_points = """
     [paste.filter_app_factory]
-    main = flask_metaroute:MetaRoute
+    main = flask_metaroute.middleware:MetaRouteMiddlewareAppFactory
     """
 )

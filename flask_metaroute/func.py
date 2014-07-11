@@ -2,14 +2,16 @@ import types as t
 import os, imp
 import inspect
 
-def scan_folder_recurse(folder, excl_names=['__']):
-    """ Recurse search for PY files in given folder """                                                                                                                                   
+
+def scan_folder_recursive(folder, excl_names=['__']):
+    """ Recursive search for PY files in given folder """
     all_files = []                                                                                                                                                                      
     for root, d, files in os.walk(folder):                                              #@UnusedVariable
         filelist = [os.path.join(root, fi) for fi in files if fi.endswith('.py')
                     and not any(fi.startswith(prefix) for prefix in excl_names)]
         all_files += filelist
     return all_files
+
 
 def scan_package(p):
     for x in dir(p):
@@ -19,10 +21,10 @@ def scan_package(p):
                     yield o
 
 def attach_controllers(app, pkg):
-    pkg_path  = pkg.__path__[0]
-    pkg_name  = pkg.__name__
+    pkg_path = pkg.__path__[0]
+    pkg_name = pkg.__name__
     
-    all_files = scan_folder_recurse(pkg_path)
+    all_files = scan_folder_recursive(pkg_path)
     for f in all_files:
         pkg = f[len(pkg_path):]
         pkg = pkg.strip("/")[:-3]
