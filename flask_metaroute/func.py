@@ -1,5 +1,4 @@
-import types as t
-import os, imp
+import os, importlib
 import inspect
 
 
@@ -20,6 +19,7 @@ def scan_package(p):
             if inspect.isclass(o) and o.__module__.startswith(p.__name__) and getattr(o, "METAROUTE_CONTROLLER_PATH", None) is not None: 
                     yield o
 
+
 def attach_controllers(app, pkg):
     pkg_path = pkg.__path__[0]
     pkg_name = pkg.__name__
@@ -27,14 +27,14 @@ def attach_controllers(app, pkg):
     all_files = scan_folder_recursive(pkg_path)
     for f in all_files:
         pkg = f[len(pkg_path):]
-        pkg = pkg.strip("/")[:-3]
+        pkg = pkg.strip("/\\")[:-3]
         
         if len(pkg):
             pkg = pkg_name + "." + pkg
         
-        attach_controller(app, imp.load_source(pkg, f))
-        
-        
+        attach_controller(app, importlib.import_module(pkg))
+
+
 def attach_controller(app, mdl):
     for cls in scan_package(mdl):
         if cls.__module__.startswith(mdl.__name__):
@@ -52,7 +52,3 @@ def attach_controller(app, mdl):
     
                     for ex in getattr(m, "METAROUTE_ERROR_EXCEPTIONS", []):
                         app._register_error_handler(None, ex, cls.__dict__[m.__name__].__get__(ctrl, cls))
-            
-
-
-

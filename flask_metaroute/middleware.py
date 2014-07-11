@@ -6,4 +6,4 @@ def MetaRouteMiddleware(app, package):
 
 
 def MetaRouteMiddlewareAppFactory(app, global_config, package):
-        return MetaRouteMiddleware(app, package)
+    return MetaRouteMiddleware(app, package)

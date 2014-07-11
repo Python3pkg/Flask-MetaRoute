@@ -24,8 +24,8 @@ def Route(path = "", *args, **kwargs):
     return d
 
 
-def Error(ex):
+def Error(ex, *args):
     def d(f):
-        f.METAROUTE_ERROR_EXCEPTIONS = getattr(f, "METAROUTE_ERROR_EXCEPTIONS", []) + [ex]
+        f.METAROUTE_ERROR_EXCEPTIONS = getattr(f, "METAROUTE_ERROR_EXCEPTIONS", []) + [ex] + list(args)
         return f
     return d
