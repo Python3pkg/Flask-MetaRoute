@@ -9,7 +9,7 @@ from setuptools import setup
 setup(
     name='Flask-MetaRoute',
     version='1.3',
-    url='http://code.google.com/p/flask-metaroute/',
+    url='https://github.com/deep-orca/Flask-MetaRoute',
     license='BSD',
     author='Orca',
     author_email='deep.orca@gmail.com',
